@@ -1,30 +1,45 @@
 // pages/api/elevator.js
 export default async function handler(req, res) {
-    console.log("들어옴",req.body)
-    try {
-      const apiKey = process.env.SEOUL_API_KEY;  // 환경 변수에서 API 키를 가져옵니다.
-      //const url = 'http://openapi.seoul.go.kr:8088/sample/xml/CardSubwayStatsNew/1/5/20220301';  // API URL
-      const url = `http://openapi.seoul.go.kr:8088/${process.env.SEOUL_API_KEY}/json/tbTraficElvtr/1/643/`
-  
-      const response = await fetch(url);  // API 호출
-      if (!response.ok) {
-        console.log('안됨')
-        throw new Error('Network response was not ok');  // 네트워크 오류 처리
+  console.log("들어옴", req.body);
+  try {
+    const apiKey = process.env.SEOUL_API_KEY; // 환경 변수에서 API 키를 가져옵니다.
+    const url = `http://openapi.seoul.go.kr:8088/${process.env.SEOUL_API_KEY}/json/tbTraficElvtr/1/643/`;
+
+    const response = await fetch(url); // API 호출
+    if (!response.ok) {
+      console.log('안됨');
+      throw new Error('Network response was not ok'); // 네트워크 오류 처리
+    }
+
+    const data = await response.json(); // JSON 응답을 객체로 변환
+
+    // 데이터 가공
+    const my_result = data.tbTraficElvtr.row.map(item => {
+      // 정규식을 이용하여 NODE_WKT에서 위도와 경도 추출
+      const regex = /POINT\(([-+]?\d*\.\d+) ([-+]?\d*\.\d+)\)/;
+      const match = item.NODE_WKT.match(regex);
+
+      let latitude = null;
+      let longitude = null;
+
+      if (match) {
+        longitude = parseFloat(match[1]); // 경도
+        latitude = parseFloat(match[2]); // 위도
       }
 
-      //console.log('응답:', response)
-      const data = await response.json();  // JSON 응답을 객체로 변환
-      console.log('응답',data);
-      console.log('테스트',data.tbTraficElvtr);
+      return {
+        NODE_WKT: item.NODE_WKT,
+        SGG_NM: item.SGG_NM,
+        SBWY_STN_CD: item.SBWY_STN_CD,
+        SBWY_STN_NM: item.SBWY_STN_NM,
+        Latitude: latitude, // 위도
+        Longitude: longitude // 경도
+      };
+    });
 
-      // 데이터 가공
-      let my_result = [{}]
-
-
-      res.status(200).json(data);  // 클라이언트에게 JSON 응답 전송
-    } catch (error) {
-      console.error('Failed to fetch data:', error);  // 오류 로깅
-      res.status(500).json({ error: 'Failed to fetch data' });  // 오류 응답
-    }
+    res.status(200).json(my_result); // 클라이언트에게 JSON 응답 전송
+  } catch (error) {
+    console.error('Failed to fetch data:', error); // 오류 로깅
+    res.status(500).json({ error: 'Failed to fetch data' }); // 오류 응답
   }
-  
+}
