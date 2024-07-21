@@ -1,6 +1,6 @@
 // pages/api/elevator.js
 export default async function handler(req, res) {
-  console.log("들어옴", req.body);
+  //console.log("들어옴", req.body);
   try {
     const url = `http://openapi.seoul.go.kr:8088/${process.env.SEOUL_API_KEY}/json/tbTraficElvtr/1/643/`;
 

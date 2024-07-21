@@ -1,17 +1,17 @@
-let station_number=[
+export let station_number=[
     {
         lat:37.571417966123946,
         lon:127.01049296509703,
-        num:0
+        num:6
     },
     {
         lat:37.57329704981851,
         lon:127.01744971746365,
-        num:0
+        num:3
     },
     {
         lat:37.57951303710329,
         lon:127.01551499790813,
-        num:0
+        num:4
     }
 ];

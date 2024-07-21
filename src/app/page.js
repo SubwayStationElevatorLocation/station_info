@@ -6,6 +6,7 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import { useEffect, useState } from "react";
 import KakaoMap from "@/components/kakao_map/kakao_map";
+import { station_number } from "@/utils/data";
 
 export default function Home() {
   const [data, setData] = useState(null);
@@ -28,7 +29,14 @@ export default function Home() {
         }
         const result = await response.json();
 
-        result[0].information = result[0].information + 'n번 출구'
+        result.forEach(item => {
+          station_number.forEach(station => {
+            if (station.lat === item.latitude && station.lon === item.longitude) {
+              item.information = `${item.information} ${station.num}번 출구`;
+            }
+          });
+        });
+        //result[0].information = result[0].information + 'n번 출구'
 
         // 받은 result에 information + x번 출구
         console.log("테스트",result)
@@ -53,7 +61,7 @@ export default function Home() {
     //     Longitude: item.Longitude // 경도
     //   }));
     // };
-
+    
     fetchData();
 
   }, [])
@@ -140,7 +148,7 @@ export default function Home() {
             </ul>
           </div>
         ) : (
-          <p>Loading...</p>
+          <p>데이터 없음</p>
         )}
       </div>
     </div>
