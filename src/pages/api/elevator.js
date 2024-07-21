@@ -29,9 +29,9 @@ export default async function handler(req, res) {
 
       return {
         NODE_WKT: item.NODE_WKT,
-        SGG_NM: item.SGG_NM,
-        SBWY_STN_CD: item.SBWY_STN_CD,
-        SBWY_STN_NM: item.SBWY_STN_NM,
+        City_County_District_Name: item.SGG_NM,
+        Subway_Station_Code: item.SBWY_STN_CD,
+        Subway_Station_Name: item.SBWY_STN_NM,
         Latitude: latitude, // 위도
         Longitude: longitude // 경도
       };
