@@ -9,6 +9,7 @@ import KakaoMap from "@/components/kakao_map/kakao_map";
 
 export default function Home() {
   const [data, setData] = useState(null);
+  const my_result = data ? processResult() : [];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,7 +52,6 @@ export default function Home() {
   };
 
   // 데이터가 유효할 때만 processResult 함수 호출
-  const my_result = data ? processResult() : [];
 
   return (
     <div className={styles.homeContainer}>
