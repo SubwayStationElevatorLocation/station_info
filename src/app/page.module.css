@@ -4,27 +4,30 @@
 }
 
 .inputContent input{
-    width:30vw;
-    min-width:200px;
+    width:35vw;
+    min-width:250px;
     padding:5px 15px;
 }
 
 .contentFlex{
     display: flex;
-    
+    justify-content: space-between;
 }
 
 .mapContent{
-    width:30vw;
+    width:35vw;
     height:30vw;
 }
 
 .gptContent{
-    width:30vw;
+    width:23vw;
+    max-height: 30vw;
+    overflow-y: auto;
+    border:1px solid #ccc;
 }
 
 .gptContent ul{
-    list-style: none;
+    list-style: circle;
 }
 
 .gptContent li{
