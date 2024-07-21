@@ -2,7 +2,6 @@
 export default async function handler(req, res) {
   console.log("들어옴", req.body);
   try {
-    const apiKey = process.env.SEOUL_API_KEY; // 환경 변수에서 API 키를 가져옵니다.
     const url = `http://openapi.seoul.go.kr:8088/${process.env.SEOUL_API_KEY}/json/tbTraficElvtr/1/643/`;
 
     const response = await fetch(url); // API 호출
@@ -28,14 +27,16 @@ export default async function handler(req, res) {
       }
 
       return {
-        NODE_WKT: item.NODE_WKT,
-        City_County_District_Name: item.SGG_NM,
-        Subway_Station_Code: item.SBWY_STN_CD,
-        Subway_Station_Name: item.SBWY_STN_NM,
-        Latitude: latitude, // 위도
-        Longitude: longitude // 경도
+        //NODE_WKT: item.NODE_WKT,
+        city_name: item.SGG_NM,
+        //Subway_Station_Code: item.SBWY_STN_CD,
+        subway_name: item.SBWY_STN_NM,
+        information: item.SGG_NM + " " + item.SBWY_STN_NM + "역 ",
+        latitude: latitude, // 위도
+        longitude: longitude // 경도
       };
     });
+
 
     res.status(200).json(my_result); // 클라이언트에게 JSON 응답 전송
   } catch (error) {
