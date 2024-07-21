@@ -1,0 +1,32 @@
+.homeContainer{
+    max-width:60vw;
+    margin:auto;
+}
+
+.inputContent input{
+    width:30vw;
+    min-width:200px;
+    padding:5px 15px;
+}
+
+.contentFlex{
+    display: flex;
+    
+}
+
+.mapContent{
+    width:30vw;
+    height:30vw;
+}
+
+.gptContent{
+    width:30vw;
+}
+
+.gptContent ul{
+    list-style: none;
+}
+
+.gptContent li{
+    padding:10px;
+}
