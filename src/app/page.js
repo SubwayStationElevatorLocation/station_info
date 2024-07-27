@@ -115,7 +115,7 @@ export default function Home() {
       </div>
       <div className={styles.contentFlex}>
         <div className={styles.mapContent}>
-          <KakaoMap/>
+          <KakaoMap data={data}/>
         </div>
         <div className={styles.gptContent}>
           <ul>

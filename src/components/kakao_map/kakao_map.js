@@ -5,14 +5,29 @@ import { useEffect, useState } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 const KAKAO_SDK_URL = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.KAKAO_MAP_KEY}&autoload=false`;
 export default function KakaoMap(props){
+
+    
    const [center, setCenter] = useState({lat: 37.57329704981851, lng: 127.0174491746965})
     const [locations, setLocations] = useState([{lat: 37.57329704981851, lng: 127.0174491746965, name: '종로구 동묘앞역 3번 출구'}] )
 
     useEffect(()=>{
-        if (props.locations && props.locations.length > 0) {
-            setLocations(props.locations); 
-        }
-    }, [props.locations]);
+        if (props.data && props.data.length > 0) {
+            const transformedLocations = props.data.map(item => ({
+                lat: item.latitude,
+                lng: item.longitude,
+                name: item.information
+            }));
+             
+            setLocations(transformedLocations);
+
+            setTimeout(() =>{
+                setCenter({
+                    lat: transformedLocations[0].lat,
+                    lng: transformedLocations[0].lng,
+                });
+            }, 1000);
+         }
+    }, [props.data]);
 
     //
     useEffect(()=>{
@@ -31,7 +46,7 @@ export default function KakaoMap(props){
                 {
                     locations.map((location, index)=>{
                         return(
-                                <MapMarker position={{lat: location.lat,lng: location.lng }}>
+                                <MapMarker position={{lat: location.lat,lng: location.lng }} key={index}>
                                     <div style={{color: "#000"}}>{location.name}</div>
 
                                 </MapMarker>
