@@ -45,13 +45,13 @@ export default function KakaoMap(props){
     return(
         <div style={{width:'100%', height:'100%'}}>
             <Script src={KAKAO_SDK_URL} strategy="beforeInteractive" />
-            <Map center={center} style={{width:"100%", height:"100%" }}>
+            <Map center={center} level={3} style={{width:"100%", height:"100%" }}>
 
                 {
                     locations.map((location, index)=>{
                         return(
                                 <MapMarker position={{lat: location.lat,lng: location.lng }} key={index}>
-                                    <div style={{color: "#000"}}>{location.name}</div>
+                                    <div style={{color: "#000", width:"101%"}}>{location.name}</div>
 
                                 </MapMarker>
                         )
