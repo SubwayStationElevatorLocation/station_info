@@ -19,15 +19,19 @@ export default function KakaoMap(props){
             }));
              
             setLocations(transformedLocations);
-
-            setTimeout(() =>{
-                setCenter({
-                    lat: transformedLocations[0].lat,
-                    lng: transformedLocations[0].lng,
-                });
-            }, 1000);
          }
     }, [props.data]);
+
+
+    // prop.date 변경 시 locations업데이트
+    useEffect(() => {
+        if (locations.length > 0) {
+            setCenter({
+                lat: locations[0].lat,
+                lng: locations[0].lng
+            });
+        }
+    }, [locations]);
 
     //
     useEffect(()=>{
