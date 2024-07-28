@@ -33,7 +33,7 @@ export default function Home() {
         result.forEach(item => {
           station_number.forEach(station => {
             if (station.lat === item.latitude && station.lon === item.longitude) {
-              item.information = `${item.information} ${station.num}번 출구`;
+              item.information = `${item.information} ${station.num}`;
             }
           });
         });
