@@ -1,5 +1,6 @@
 "use client";
 
+import "./kakao_map.css"
 import Script from "next/script";
 import { useEffect, useState } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
@@ -15,7 +16,8 @@ export default function KakaoMap(props){
             const transformedLocations = props.data.map(item => ({
                 lat: item.latitude,
                 lng: item.longitude,
-                name: item.information
+                name: item.information,
+                subway_name: item.subway_name
             }));
              
             setLocations(transformedLocations);
@@ -50,10 +52,16 @@ export default function KakaoMap(props){
                 {
                     locations.map((location, index)=>{
                         return(
-                                <MapMarker position={{lat: location.lat,lng: location.lng }} key={index}>
-                                    <div style={{color: "#000", width:"101%"}}>{location.name}</div>
+                                <MapMarker position={{lat: location.lat,lng: location.lng }} key={index} >
+                                    <div className={location.subway_name ? 'txt' : 'txt-1'} >{location.name}
+
+</div>
+                                    
+
 
                                 </MapMarker>
+
+                                
                         )
                             
 
