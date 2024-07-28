@@ -13,6 +13,7 @@ export default function Home() {
 //  const my_result = data ? processResult() : [];
   const [gptInput, setGptInput] = useState('');
   const [answer, setAnswer] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,30 +42,40 @@ export default function Home() {
         // 받은 result에 information + x번 출구
         console.log("테스트",result)
         setData(result);
+        setFilteredData(result);
       } catch (error) {
         console.error('Failed to fetch data', error);
       }
     };
-
-    // const processResult = async () => {
-    //   console.log('Data:', data); // 데이터 확인용 로그
-    //   if (!data || !data.length) {
-    //     return []; // 데이터가 없으면 빈 배열 반환
-    //   }
-  
-    //   return data.map(item => ({
-    //     NODE_WKT: item.NODE_WKT,
-    //     SGG_NM: item.SGG_NM,
-    //     SBWY_STN_CD: item.SBWY_STN_CD,
-    //     SBWY_STN_NM: item.SBWY_STN_NM,
-    //     Latitude: item.Latitude, // 위도
-    //     Longitude: item.Longitude // 경도
-    //   }));
-    // };
     
     fetchData();
 
   }, [])
+
+  const compareWords = (str1, str2) => {
+    const words1 = str1.split(' ');
+    const words2 = str2.split(' ');
+  
+    const hasThreeConsecutiveChars = (word1, word2) => {
+      for (let i = 0; i < word1.length - 2; i++) {
+        if (word2.includes(word1.substring(i, i + 3))) {
+          return true;
+        }
+      }
+      return false;
+    };
+  
+    for (let i = 0; i < words1.length; i++) {
+      for (let j = 0; j < words2.length; j++) {
+        if (hasThreeConsecutiveChars(words1[i], words2[j])) {
+          return true;
+        }
+      }
+    }
+  
+    return false;
+  };
+  
 
   const hGptSubmit = async (e) =>{
     e.preventDefault();
@@ -74,7 +85,8 @@ export default function Home() {
     let system_json = JSON.stringify(data)
     
     // input과 data.information을 이용해서 곂치는 부분만 새로운 state에 담는다(지도표시)
-
+    const filtered = data.filter(item => compareWords(gptInput, item.information));
+    setFilteredData(filtered);
 
     try{
       const res = await fetch('api/gpt', {
@@ -115,7 +127,7 @@ export default function Home() {
       </div>
       <div className={styles.contentFlex}>
         <div className={styles.mapContent}>
-          <KakaoMap data={data}/>
+          <KakaoMap data={filteredData}/>
         </div>
         <div className={styles.gptContent}>
           <ul>
