@@ -37,6 +37,7 @@ export default async function handler(req, res) {
       };
     });
 
+    console.log(my_result)
 
     res.status(200).json(my_result); // 클라이언트에게 JSON 응답 전송
   } catch (error) {

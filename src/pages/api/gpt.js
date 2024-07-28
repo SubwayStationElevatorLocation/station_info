@@ -12,7 +12,7 @@ export default async function handler(req, res){
         const response = await openai.chat.completions.create({
             model: 'gpt-4o-mini',
             messages:[
-                {role:'system', content:'지하철역 엘리베이터 위치를 위도경도로 제공했으니 이를 토대로 해당 지하철역의 출구번호를 안내해줘. '+system_content},
+                {role:'system', content:'지하철역 엘리베이터 위치를 안내하기위해 자료를 제공했으니 이를 토대로 입력한 지하철역의 엘리베이터가 있는 출구의 번호를 지하철역명과 함께 안내해줘. '+system_content},
                 {role:'user', content:user_prompt}
             ],
             max_tokens:1000,

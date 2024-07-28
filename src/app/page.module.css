@@ -33,3 +33,22 @@
 .gptContent li{
     padding:10px;
 }
+
+.infoContainer{
+    color: black;
+}
+
+.infoContainer ul{
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 10px;
+}
+
+.infoContainer li{
+    flex: 0 0 33%;
+    box-sizing: border-box;
+    border: 1px solid black;
+    padding-left: 10px;
+    border-radius: 10px;
+}
