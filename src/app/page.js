@@ -145,7 +145,7 @@ export default function Home() {
       </div>
       <div>
         {data ? (
-          <div>
+          <div className={styles.infoContainer}>
 
             <ul>
               {data.map((item, index) => (
